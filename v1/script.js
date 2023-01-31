@@ -47,6 +47,8 @@ const initialFacts = [
   },
 ];
 
+console.log(initialFacts)
+
 // FUNCTIONALITY => Create DOM elements: Render facts in list.
 factsList.innerHTML = "";
 
