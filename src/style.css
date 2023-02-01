@@ -117,6 +117,10 @@ section {
 	padding-bottom: 40px;
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
+
 .category {
 	margin-bottom: 16px;
 }
