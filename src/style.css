@@ -8,7 +8,7 @@ body {
 	background-color: #292524;
 	color: #fafaf9;
 	font-family: "Sono", sans-serif;
-	padding: 48px 64px;
+	padding: 48px 64px 0px;
 }
 
 .hidden {
@@ -21,6 +21,12 @@ body {
 	font-size: 32px;
 	font-weight: 600;
 	margin-top: 24px;
+}
+
+.disputed {
+	color: #ef4444;
+	font-weight: 600;
+	margin-right: 10px;
 }
 
 #root {
@@ -88,6 +94,8 @@ body {
 	display: grid;
 	grid-template-columns: 250px 1fr;
 	gap: 48px;
+
+	height: calc(100vh - 48px - 68px - 40px);
 }
 
 @media (max-width: 900px) {
@@ -102,6 +110,11 @@ h1 {
 	font-family: "Coiny", cursive;
 	line-height: 1;
 	margin-top: 6px;
+}
+
+section {
+	overflow: scroll;
+	padding-bottom: 40px;
 }
 
 .category {
@@ -222,7 +235,7 @@ ul {
 
 @media (max-width: 1000px) {
 	body {
-		padding: 32px 48px;
+		/* padding: 32px 48px; */
 	}
 
 	.fact-form {
@@ -232,5 +245,31 @@ ul {
 	.fact-form input,
 	.fact-form select {
 		width: auto;
+	}
+}
+
+@media (max-width: 900px) {
+	.main {
+		grid-template-columns: 1fr;
+		height: auto;
+	}
+}
+
+@media (max-width: 600px) {
+	#root {
+		padding: 24px;
+	}
+
+	.header {
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.fact-form {
+		padding: 16px;
+	}
+
+	.fact {
+		padding: 12px 16px;
 	}
 }
