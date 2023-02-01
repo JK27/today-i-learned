@@ -2,31 +2,35 @@ import {useEffect, useState} from "react";
 import supabase from "./supabase";
 import "./style.css"
 
-/*
-function Counter() {
-  const [count, setCount] = useState(0)
 
-  return <div>
-    <span style={{fontSize: "40px"}}>{count}</span>
-    <button className="btn btn-large" onClick={() => setCount(count + 1)}>+1</button>
-  </div>
-}
-*/
+
 
 /////////////////////////////////////////////////////////// APP
 function App() {
-  const [showForm, setShowForm] = useState(false)
-  const [facts, setFacts] = useState([])
+  const [showForm, setShowForm] = useState(false);
+  const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState("all");
 
   useEffect(function () {
     async function getFacts() {
-      const {data: facts, error} = await supabase
-        .from('facts')
+      setIsLoading(true);
+
+      let query = supabase.from('facts')
         .select('*');
-      setFacts(facts);
+
+      if (currentCategory !== "all")
+        query = query.eq("category", currentCategory)
+
+      const {data: facts, error} = await query
+        .order("votesInteresting", {ascending: false});
+
+      if (!error) setFacts(facts);
+      else alert("There was an error loading the facts.")
+      setIsLoading(false);
     }
     getFacts();
-  }, [])
+  }, [currentCategory])
 
 
   return (
@@ -41,13 +45,20 @@ function App() {
       {/* ------------------------------------------------- MAIN */}
       <main className="main">
         {/* ---------------------------------- CATEGORY FILTERS */}
-        <CategoryFilter />
+        <CategoryFilter setCurrentCategory={setCurrentCategory} />
 
         {/* ---------------------------------- FACTS LIST */}
-        <FactsList facts={facts} />
+        {isLoading ? <Loader /> : <FactsList facts={facts} />}
+
       </main>
     </>
   )
+}
+
+//////////////////////////////////////////// LOADER
+function Loader() {
+  return <p className="message">Loading...</p>
+
 }
 
 //////////////////////////////////////////// HEADER
@@ -139,18 +150,18 @@ function NewFactForm({setFacts, setShowForm}) {
 }
 
 //////////////////////////////////////////// CATEGORY FILTERS
-function CategoryFilter() {
+function CategoryFilter({setCurrentCategory}) {
   return (
     <aside>
       <ul>
         <li className="category">
-          <button className="btn btn-all-categories">All</button>
+          <button className="btn btn-all-categories" onClick={() => setCurrentCategory("all")}>All</button>
         </li>
         {CATEGORIES.map((cat) =>
           <li key={cat.name} className="category">
             <button
               className="btn btn-category"
-              style={{backgroundColor: cat.color}}>
+              style={{backgroundColor: cat.color}} onClick={() => setCurrentCategory(cat.name)}>
               {cat.name}
             </button>
           </li >
@@ -162,7 +173,7 @@ function CategoryFilter() {
 
 //////////////////////////////////////////// FACTS LIST
 function FactsList({facts}) {
-
+  if (facts.length === 0) {return <p className="message">No facts for this category yet. Create the first one!</p>}
   return (
     <section>
       <ul className="facts-list">
@@ -170,7 +181,7 @@ function FactsList({facts}) {
           <Fact key={fact.id} fact={fact} />
         ))}
       </ul>
-      <p>There are {facts.length} facts in the database.</p>
+      <p>There are {facts.length} facts in the database. Add your own!</p>
     </section>
   );
 }
