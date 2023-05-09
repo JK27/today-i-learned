@@ -9,12 +9,12 @@ This is a fact-sharing app where users can find and share anything that they thi
 - If a fact has more dispute votes than likes, a "DISPUTED" badge will appear at the begining of the fact. 
 - You can also share a fact by clicking on the button at the top-right corner. This will display a form where you need to type your fact, provide a valid link with the source of the fact and also select a category for it. All fields are mandatory. **PLEASE NOTE** In order to keep the database clean and tidy, this functionality is currently disabled.  
 
-#Built with 
+# Built with 
 - HTML 
 - CSS 
 - JavaScript 
 - React 
 - Supabase 
 
-#Credits 
+# Credits 
 This application was created as part of the [Crash Course: Build a Full-Stack Web App in a Weekend!](https://www.udemy.com/course/full-stack-crash-course) at Udemy. All credits go to Jonas Schmedtman, creator and teacher of the course at Udemy. 
